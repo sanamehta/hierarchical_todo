@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/style.css"> <!-- Adjust the href based on your file location -->
+
+    <title>Login</title>
+</head>
+<body>
+    <img src="static/logo.png" alt="logo" class="logo">
+    <h2>Login</h2>
+    <div class="form-style login-form">
+    <h3> Welcome Back!</h3>
+    <form action="{{ url_for('login') }}" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=40) }}<br>
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <a href="{{url_for('register')}}">Create new account! Sign up 🎉</a>
+</div>
+</body>
+</html>
+
+

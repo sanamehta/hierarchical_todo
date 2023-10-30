@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="static/style.css"> <!-- Adjust the href based on your file location -->
+
+</head>
+<body>
+    <img src="static/logo.png" alt="logo" class="logo">
+
+    <h2>Register</h2>
+
+    <div class="form-style register-form">
+
+
+    <h3>Sign up today</h3>
+    <form action="{{ url_for('register') }}" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+        </p>
+        <p>
+            {{ form.confirm_password.label }}<br>
+            {{ form.confirm_password(size=32) }}<br>
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <a href="{{ url_for('login') }}">Already have an account? Login 👈</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+body {
+    font-family: sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    line-height: 1.6;
+    padding: 0 20px;
+    margin-left: 80px;
+   
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding-left: 20px;
+    text-align: left;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+}
+
+input[type="text"] {
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    margin: 5px 0 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button[type="button"] {
+    background-color: #6c757d;
+}
+
+button[type="button"]:hover {
+    background-color: #5a6268;
+}
+
+.toggle-link {
+    cursor: pointer;
+    padding-right: 5px;
+    user-select: none;
+}
+
+.toggle-link.expanded::before {
+    content: "▼";
+}
+
+.add-link {
+    color: green;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.add-link:hover {
+    color: #28a745;
+}
+
+.fas {
+    margin-left: 10px;
+}
+
+.fas.fa-edit {
+    color: #f0ad4e;
+    cursor: pointer;
+}
+
+.fas.fa-trash {
+    color: #d9534f;
+    cursor: pointer;
+}
+
+.fas:hover {
+    opacity: 0.7;
+}
+
+/* Indentation for nested lists */
+#tasks ul, #tasks ul ul {
+    padding-left: 20px;
+}
+
+#tasks ul li, #tasks ul ul li {
+    background-color: #f9f9f9;
+}
+
+
+
+.list {
+    border: 1px solid #4b4a4a;
+    padding: 20px;
+    border-radius: 1px;
+    max-width: 80%; /* Adjust the max-width as per your design needs */
+
+}
+
+
+.hidden {
+    display: none;
+}
+
+.toggle-link {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+
+.add-link {
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 10px;
+    background-color: #f2f2f2;
+    padding: 5px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    text-align: center;
+    padding: 20px;
+}
+/* Shared form styles */
+.form-style {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: left; /* Align text to the left inside the forms */
+}
+
+.form-style h2 {
+    color: #333366;
+    margin-bottom: 20px;
+}
+
+.form-style input[type=text], 
+.form-style input[type=password] {
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.form-style input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-style input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+/* Other links in the forms */
+.form-style a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #333366;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.form-style a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments for both forms */
+@media (max-width: 600px) {
+    .form-style {
+        width: 90%;
+        margin: 10px;
+        padding: 15px;
+    }
+}
+
+/* Login form specific adjustments (if any) */
+.login-form {
+    /* Add specific styles for login form here if needed */
+}
+
+/* Registration form specific adjustments (if any) */
+.register-form {
+    /* Add specific styles for registration form here if needed */
+}
+
+/* General body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eef2f7;
+    padding: 20px;
+}
+
+/* Logo styles */
+.logo {
+    width: 50px; /* Adjust this value as needed */
+    height: auto; /* This ensures the aspect ratio is maintained */
+}
+
+
+
+h1 {
+    color: #333;
+}
+
+ul {
+    list-style: none;
+  
+    padding-left: 20px;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    position: relative;
+}
+
+input[type="text"], button, .edit, .delete {
+    padding: 8px;
+    margin-right: 5px;
+}
+
+input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    max-width: 60%;
+    align-items: flex-start;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.edit, .delete {
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.edit { right: 40px; }
+.delete { right: 10px; }
+
+.edit:hover, .delete:hover {
+    color: #555;
+}
+
+.add-link, .toggle-link {
+    cursor: pointer;
+    margin-right: 5px;
+    user-select: none;
+}
+
+.toggle-link {
+    display: inline-block;
+    transform: rotate(0deg);
+    transition: transform 0.3s;
+}
+
+.expanded {
+    transform: rotate(90deg);
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.alert-success { background-color: #4CAF50; }
+.alert-danger { background-color: #f44336; }
+
+/* Nested Tasks */
+ul ul {
+    padding-left: 20px;
+}
+
+ul ul li {
+    background-color: #f7f7f7;
+    border-color: #eee;
+}
+
+.fas {
+    padding: 0 5px;
+    color: #333; /* Or any color you prefer */
+    cursor: pointer;
+}
+
+.fas:hover {
+    color: #666; /* Change color on hover */
+}
+
+
+.logout-button {
+    background-color: #cd5858;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 18px;}
+  
+
+.list_add{
+   
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+ 
+    font-size: 18px;
+}
+
+.input-field {
+    width: 100%; /* Or any specific size */
+    /* Add any other styles you want to apply uniformly */
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%; /* Ensure uniform width */
+    box-sizing: border-box; /* Include padding and border in the element's width */
+    /* You can add more properties like padding, border, etc., here */
+}
