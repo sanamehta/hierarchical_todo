@@ -98,7 +98,10 @@ def register():
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
+    elif form.is_submitted():
+        flash('There was an error with your registration', 'danger')
     return render_template('register.html', title='Register', form=form)
+   
 
 
 # Route for user login

@@ -1,31 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hierarchical TODO List</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hierarchical TODO List</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <!-- Logout Button -->
+  <a href="{{url_for('logout')}}" class="logout-button">Logout</a>
+  
+  <!-- Logo -->
+  <img src="static/logo.png" alt="logo" class="logo">
 
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
-  </head>
-  <body>
-    <a href="{{url_for('logout')}}" class="logout-button"> Logout</a>
-    
-    <img src="static/logo.png" alt="logo" class="logo">
+  <!-- Main Heading -->
+  <h1>Hierarchical Todo List</h1>
 
-    <h1>Todo List</h1>
-
+    <!-- Form to Add New List -->
     <div class ="list_add">
         <form action="/add_task" method="post">
         <input type="text" name="title" placeholder="New List" required />
@@ -34,39 +27,28 @@
         </form>
     </div>
 
+  <!-- List Items Start Here -->
     <ul>
       {% for todo in todos if todo.parent_id is none %}
       <li class="list">
+      <!-- List Item Toggle -->
         <span class="toggle-link" onclick="toggletasks('tasks{{ todo.id }}')"
-          >&#9654;</span
-        >
+          >&#9654;</span>
         <span class="toggle-container">
-          <span
-            class="toggle-button"
-            onclick="toggleTasks('{{ todo.id }}')"
-          ></span>
+          <span class="toggle-button" onclick="toggleTasks('{{ todo.id }}')"></span>
         </span>
 
+        <!-- Task Title -->
         <strong>{{ todo.title }}</strong>
-        <input
-          type="checkbox"
-          onchange="location.href='/delete_task/{{ todo.id }}'"
-        />
-        
-        </div>
-        
-        <span id="editLink{{ todo.id }}">
-          <a href="javascript:void(0)" onclick="showEditForm('{{ todo.id }}')">
-            <i class="fas fa-edit"></i>
-          </a>
-        </span>
 
-        <form
-          action="/edit_task/{{ todo.id }}"
-          method="post"
-          id="editForm{{ todo.id }}"
-          style="display: none"
-        >
+        <!-- Task Checkbox -->
+        <input type="checkbox" onchange="location.href='/delete_task/{{ todo.id }}'" />
+
+        <!-- Edit  -->
+        <span id="editLink{{ todo.id }}">
+            <a href="javascript:void(0)" onclick="showEditForm('{{ todo.id }}')"><i class="fas fa-edit"></i></a>
+        </span>
+        <form action="/edit_task/{{ todo.id }}" method="post" id="editForm{{ todo.id }}" style="display: none">
           <input type="text" name="title" value="{{ todo.title }}" />
           <button type="submit">Save</button>
           <button type="button" onclick="hideEditForm('{{ todo.id }}')">
@@ -74,252 +56,155 @@
           </button>
         </form>
 
-        <a href="/delete_task/{{ todo.id }}">
-          <i class="fas fa-trash"></i>
-        </a>
+        <!-- Delete -->
+        <a href="/delete_task/{{ todo.id }}"><i class="fas fa-trash"></i></a>
 
+    
+        <!-- Add Task Form -->
         <span class="add-link" onclick="toggleAddForm('addForm{{ todo.id }}')"
-          >+</span
-        >
-        <form
-          action="/add_task"
-          method="post"
-          id="addForm{{ todo.id }}"
-          style="display: none"
-        >
+          >+</span>
+        <form action="/add_task" method="post" id="addForm{{ todo.id }}" style="display: none">
           <input type="text" name="title" placeholder="New task" required />
           <input type="hidden" name="parent_id" value="{{ todo.id }}" />
           <button type="submit">Add Task</button>
         </form>
 
+
+
+        <!-- Nested hierarchies (task->subtask->subsubtask) with same operations and CRUD features -->
+
+
+
+        <!--Tasks -->
         <ul id="tasks{{ todo.id }}">
           {% for task in todo.sub_tasks %}
           <li>
-
-
-
-            <span
-              class="toggle-link"
-              onclick="toggletasks('subtasks{{ task.id }}')"
-              >&#9654;</span
-            >
+           
+            <span class="toggle-link" onclick="toggletasks('subtasks{{ task.id }}')">&#9654;</span>
 
             {{ task.title }}
      
-            <input
-              type="checkbox"
-              onchange="location.href='/delete_task/{{ task.id }}'"
-            />
-              
-
+            <input type="checkbox" onchange="location.href='/delete_task/{{ task.id }}'"/>
               
             <span id="editLink{{ todo.id }}_{{ task.id }}">
-              <a
-                href="javascript:void(0)"
-                onclick="showEditForm('{{ todo.id }}_{{ task.id }}')"
-                ><i class="fas fa-edit"></i>
-              </a>
+              <a href="javascript:void(0)" onclick="showEditForm('{{ todo.id }}_{{ task.id }}')"><i class="fas fa-edit"></i></a>
             </span>
 
-            <form
-              action="/edit_task/{{ task.id }}"
-              method="post"
-              id="editForm{{ todo.id }}_{{ task.id }}"
-              style="display: none"
-            >
+            <form action="/edit_task/{{ task.id }}" method="post" id="editForm{{ todo.id }}_{{ task.id }}" style="display: none">
               <input type="text" name="title" value="{{ task.title }}" />
               <button type="submit">Save</button>
-              <button
-                type="button"
-                onclick="hideEditForm('{{ todo.id }}_{{ task.id }}')"
-              >
-                Cancel
-              </button>
+              <button type="button" onclick="hideEditForm('{{ todo.id }}_{{ task.id }}')">Cancel</button>
             </form>
 
             <a href="/delete_task/{{ task.id }}">
               <i class="fas fa-trash"></i>
             </a>
 
-            <span
-              class="add-link"
-              onclick="toggleAddForm('addSubForm{{ task.id }}')"
-              >+</span
-            >
-                                        <!-- Move Task Form/Button -->
-                                        <span class="move-link" onclick="toggleMoveForm('moveForm{{ task.id }}')">
-                                            <i class="fas fa-exchange-alt" style="color: rgb(13, 59, 165);"></i>
-            
-                                          </span>
-                                        <form
-                                          action="/move_task/{{ task.id }}"
-                                          method="post"
-                                          id="moveForm{{ task.id }}"
-                                          style="display: none"
-                                        >
-                                          <select name="new_parent_id" required>
-                                            <option value="">Select new list</option>
-                                            {% for todo in todos %}
-                                              <option value="{{ todo.id }}">{{ todo.title }}</option>
-                                            {% endfor %}
-                                          </select>
-                                          <button type="submit">Move</button>
-                                          <button type="button" onclick="toggleMoveForm('moveForm{{ task.id }}')">Cancel</button>
-                                        </form>
+            <span class="add-link" onclick="toggleAddForm('addSubForm{{ task.id }}')">+</span>
+
+            <!-- Move Task Form/Button -->
+            <span class="move-link" onclick="toggleMoveForm('moveForm{{ task.id }}')">
+            <i class="fas fa-exchange-alt" style="color: rgb(13, 59, 165);"></i>
+            </span>
+            <form action="/move_task/{{ task.id }}" method="post" id="moveForm{{ task.id }}" style="display: none">
+                <select name="new_parent_id" required>
+                <option value="">Select new list</option>
+                {% for todo in todos %}
+                    <option value="{{ todo.id }}">{{ todo.title }}</option>
+                {% endfor %}
+                </select>
+                <button type="submit">Move</button>
+                <button type="button" onclick="toggleMoveForm('moveForm{{ task.id }}')">Cancel</button>
+             </form>
                                       
-            <form
-              action="/add_task"
-              method="post"
-              id="addSubForm{{ task.id }}"
-              style="display: none"
-            >
-              <input
-                type="text"
-                name="title"
-                placeholder="New sub task"
-                required
-              />
+            <form action="/add_task" method="post" id="addSubForm{{ task.id }}" style="display: none">
+              <input type="text" name="title" placeholder="New sub task" required/>
               <input type="hidden" name="parent_id" value="{{ task.id }}" />
               <button type="submit">Add Sub Task</button>
             </form>
 
 
 
-            <!-- ... (the rest of your HTML remains unchanged) -->
-
-            <!-- ... (the rest of your HTML remains unchanged) -->
-
+            <!-- Subtasks -->
             <ul id="subtasks{{ task.id }}">
               {% for subtask in task.sub_tasks %}
               <li>
                 {{ subtask.title }}
-                <input
-                  type="checkbox"
+                <input type="checkbox"
                   onchange="location.href='/delete_task/{{ subtask.id }}'"/>
 
                 <span id="editLink{{ todo.id }}_{{ task.id }}_{{ subtask.id }}">
-                  <a
-                    href="javascript:void(0)"
-                    onclick="showEditForm('{{ todo.id }}_{{ task.id }}_{{ subtask.id }}')"
-                    ><i class="fas fa-edit"></i>
-                  </a>
+                  <a href="javascript:void(0)" onclick="showEditForm('{{ todo.id }}_{{ task.id }}_{{ subtask.id }}')"><i class="fas fa-edit"></i></a>
                 </span>
 
-                <form
-                  action="/edit_task/{{ subtask.id }}"
-                  method="post"
-                  id="editForm{{ todo.id }}_{{ task.id }}_{{ subtask.id }}"
-                  style="display: none"
-                >
+                <form action="/edit_task/{{ subtask.id }}" method="post" id="editForm{{ todo.id }}_{{ task.id }}_{{ subtask.id }}" style="display: none">
                   <input type="text" name="title" value="{{ subtask.title }}" />
                   <button type="submit">Save</button>
-                  <button
-                    type="button"
-                    onclick="hideEditForm('{{ todo.id }}_{{ task.id }}_{{ subtask.id }}')"
-                  >
-                    Cancel
-                  </button>
+                  <button type="button" onclick="hideEditForm('{{ todo.id }}_{{ task.id }}_{{ subtask.id }}')">Cancel</button>
                 </form>
 
-                <a href="/delete_task/{{ subtask.id }}">
-                  <i class="fas fa-trash"></i>
-                </a>
+                <a href="/delete_task/{{ subtask.id }}"><i class="fas fa-trash"></i></a>
 
-                <span
-                  class="add-link"
-                  onclick="toggleAddForm('addSubSubForm{{ subtask.id }}')"
-                  >+</span
-                >
-                <form
-                  action="/add_task"
-                  method="post"
-                  id="addSubSubForm{{ subtask.id }}"
-                  style="display: none"
-                >
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="New sub-sub task"
-                    required
-                  />
-                  <input
-                    type="hidden"
-                    name="parent_id"
-                    value="{{ subtask.id }}"
-                  />
+                <span class="add-link" onclick="toggleAddForm('addSubSubForm{{ subtask.id }}')">+</span>
+                <form action="/add_task" method="post" id="addSubSubForm{{ subtask.id }}" style="display: none">
+                  <input type="text" name="title" placeholder="New sub-sub task" required/>
+                  <input type="hidden" name="parent_id" value="{{ subtask.id }}"/>
                   <button type="submit">Add Sub-Sub Task</button>
                 </form>
 
+
+                <!-- Subsubtasks -->
                 <ul id="subsubtasks{{ subtask.id }}">
                   {% for subsubtask in subtask.sub_tasks %}
                   <li>
                     
                     {{subsubtask.title }}
-                    <input type="checkbox"
-                    onchange="location.href='/delete_task/{{ subsubtask.id }}'"
-                    {{ 'checked' if subsubtask.complete else '' }}> 
+                    <input type="checkbox" onchange="location.href='/delete_task/{{ subsubtask.id }}'"{{ 'checked' if subsubtask.complete else '' }}> 
 
-                    <span
-                      id="editLink{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}"
-                    >
-                      <a
-                        href="javascript:void(0)"
-                        onclick="showEditForm('{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}')"
-                        ><i class="fas fa-edit"></i>
-                      </a>
+                    <span id="editLink{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}">
+                      <a href="javascript:void(0)" onclick="showEditForm('{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}')"><i class="fas fa-edit"></i></a>
                     </span>
 
-                    <form
-                      action="/edit_task/{{ subsubtask.id }}"
-                      method="post"
-                      id="editForm{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}"
-                      style="display: none"
-                    >
-                      <input
-                        type="text"
-                        name="title"
-                        value="{{ subsubtask.title }}"
-                      />
+                    <form action="/edit_task/{{ subsubtask.id }}" method="post" id="editForm{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}" style="display: none">
+                      <input type="text" name="title" value="{{ subsubtask.title }}"/>
                       <button type="submit">Save</button>
-                      <button
-                        type="button"
-                        onclick="hideEditForm('{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}')"
-                      >
-                        Cancel
-                      </button>
+                      <button type="button" onclick="hideEditForm('{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}')">Cancel</button>
                     </form>
 
-                    <a href="/delete_task/{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}">
-                        <i class="fas fa-trash"></i>
-                      </a>                 
+                    <a href="/delete_task/{{ todo.id }}_{{ task.id }}_{{ subtask.id }}_{{ subsubtask.id }}"> <i class="fas fa-trash"></i> </a>                 
                  </li>
+
                   {% endfor %}
-                  <!-- This is the endfor for subsubtask loop -->
                 </ul>
               </li>
               {% endfor %}
-              <!-- This is the endfor for subtask loop -->
             </ul>
           </li>
           {% endfor %}
-          <!-- This is the endfor for task loop -->
         </ul>
       </li>
       {% endfor %}
-      <!-- This is the endfor for todo loop -->
     </ul>
 
+
+
+
+    <!-- JavaScript for Interactive Features -->
     <script>
+    
+        // Function to show an edit form for a specific task
       function showEditForm(taskId) {
         document.getElementById("editForm" + taskId).style.display = "inline";
         document.getElementById("editLink" + taskId).style.display = "none";
       }
 
+      //Hide Edit Form
       function hideEditForm(taskId) {
         document.getElementById("editForm" + taskId).style.display = "none";
         document.getElementById("editLink" + taskId).style.display = "inline";
       }
 
+    // Function to toggle the display of tasks (expand/collapse)
       function toggletasks(elementId) {
         const element = document.getElementById(elementId);
         const toggleLink = element.previousElementSibling;
@@ -333,6 +218,7 @@
         }
       }
 
+    // Function to show/hide an "add new task" form
       function toggleAddForm(formId) {
         const form = document.getElementById(formId);
         if (form.style.display === "none" || form.style.display === "") {
@@ -341,6 +227,8 @@
           form.style.display = "none";
         }
       }
+
+    // Function to show/hide a form used for moving tasks between lists
       function toggleMoveForm(formId) {
         const form = document.getElementById(formId);
         if (form.style.display === "none" || form.style.display === "") {
@@ -362,31 +250,8 @@
                 localStorage.setItem(elementId, "collapsed");
   }
 }
-document.addEventListener("DOMContentLoaded", function() {
-  var lists = document.querySelectorAll('ul[id^="tasks"], ul[id^="subtasks"], ul[id^="subsubtasks"]');
-  
-  lists.forEach(function(list) {
-    var state = localStorage.getItem(list.id);
-    if (state === "expanded") {
-      list.style.display = "block";
-      list.previousElementSibling?.classList.add("expanded");
-    } else {
-      list.style.display = "none";
-      list.previousElementSibling?.classList.remove("expanded");
-    }
-  });
-});
-
-    }
-
-
-
-
-    
-
-
-   
-
+      }
     </script>
+    
   </body>
 </html>
