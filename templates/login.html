@@ -3,30 +3,54 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="static/style.css"> <!-- Adjust the href based on your file location -->
-
+    <!-- Link to external CSS file for styling -->
+    <link rel="stylesheet" href="static/style.css"> 
     <title>Login</title>
 </head>
 <body>
+    <!-- Logo image -->
     <img src="static/logo.png" alt="logo" class="logo">
+
+    <!-- Title for the login page -->
     <h2>Login</h2>
     <div class="form-style login-form">
-    <h3> Welcome Back!</h3>
-    <form action="{{ url_for('login') }}" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=40) }}<br>
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    <a href="{{url_for('register')}}">Create new account! Sign up 🎉</a>
-</div>
+        <!-- Sub-heading -->
+        <h3>Welcome Back!</h3>
+
+        <!-- Login form -->
+        <form action="{{ url_for('login') }}" method="post">
+            <!-- CSRF token for form submission security -->
+            {{ form.hidden_tag() }}
+
+            <!-- Username input field -->
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=40) }}<br>
+            </p>
+
+            <!-- Password input field -->
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}<br>
+            </p>
+
+            <!-- Submit button -->
+            <p>{{ form.submit() }}</p>
+        </form>
+
+        <!-- Link to registration page -->
+        <a href="{{url_for('register')}}">Create new account! Sign up 🎉</a>
+
+        <!-- Flash messages display -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 </body>
 </html>
-
-

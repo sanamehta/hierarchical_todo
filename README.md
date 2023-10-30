@@ -32,12 +32,12 @@ Open http://127.0.0.1:5000/ in browser
 
 
 
-## + Signup - Create a new account
+## Signup - Create a new account
 <img >
 
-## + Login to existing account
+## Login to existing account
 <img >
 
 
-# Features: Add Task, delete 
+
 

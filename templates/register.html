@@ -3,38 +3,65 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- Title of the webpage -->
     <title>Register</title>
-    <link rel="stylesheet" href="static/style.css"> <!-- Adjust the href based on your file location -->
 
+    <!-- Link to the external CSS file for styling. Ensure the path is correct -->
+    <link rel="stylesheet" href="static/style.css">
 </head>
+
 <body>
+    <!-- Logo Image -->
     <img src="static/logo.png" alt="logo" class="logo">
 
+    <!-- Heading for the Registration Page -->
     <h2>Register</h2>
 
     <div class="form-style register-form">
+        <!-- Sub-heading for the registration section -->
+        <h3>Sign up today</h3>
 
+        <!-- Registration Form -->
+        <form action="{{ url_for('register') }}" method="post">
+            <!-- CSRF Token for form submission security -->
+            {{ form.hidden_tag() }}
 
-    <h3>Sign up today</h3>
-    <form action="{{ url_for('register') }}" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-        </p>
-        <p>
-            {{ form.confirm_password.label }}<br>
-            {{ form.confirm_password(size=32) }}<br>
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    <a href="{{ url_for('login') }}">Already have an account? Login 👈</a>
+            <!-- Username Field -->
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}<br>
+            </p>
 
-</div>
+            <!-- Password Field -->
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}<br>
+            </p>
+
+            <!-- Password Confirmation Field -->
+            <p>
+                {{ form.confirm_password.label }}<br>
+                {{ form.confirm_password(size=32) }}<br>
+            </p>
+
+            <!-- Submit Button -->
+            <p>{{ form.submit() }}</p>
+        </form>
+
+        <!-- Link for users who already have an account to redirect to the Login page -->
+        <a href="{{ url_for('login') }}">Already have an account? Login 👈</a>
+
+        <!-- Section for displaying flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 
 </body>
 </html>

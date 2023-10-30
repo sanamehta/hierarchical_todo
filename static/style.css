@@ -376,3 +376,56 @@ input[type="text"], input[type="password"] {
     box-sizing: border-box; /* Include padding and border in the element's width */
     /* You can add more properties like padding, border, etc., here */
 }
+
+
+
+
+
+
+
+
+
+
+
+.form-style {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    display: block; /* Changed from inline-block for better centering */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+   /* Center text and inline elements */
+    margin: auto; /* Center the form in the container */
+    max-width: 300px; /* Adjust this as needed */
+}
+
+.form-style h2 {
+    color: #333366;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-style input[type=text], 
+.form-style input[type=password], 
+.form-style input[type=submit] {
+    width: 100%;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 2px solid #aaa;
+    font-size: 16px;
+}
+
+.form-style input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-style input[type=submit]:hover {
+    background-color: #45a049;
+}
