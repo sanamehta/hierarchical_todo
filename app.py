@@ -14,6 +14,7 @@ app = Flask(__name__)
 # Configuration for the SQLAlchemy database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
 app.secret_key = '1234'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 # Initialize SQLAlchemy with Flask app
 db = SQLAlchemy(app)
@@ -80,9 +81,10 @@ class LoginForm(FlaskForm):
 
 # Route for the main index page displaying tasks
 @app.route('/')
-@login_required
 def index():
-    todos = Todo.query.filter_by(user_id=current_user.id, parent_id=None).all()  # Display only the tasks of the current user
+    if not current_user.is_authenticated:
+        return redirect(url_for('register'))  # Redirect to registration page if not authenticated
+    todos = Todo.query.filter_by(user_id=current_user.id, parent_id=None).all()
     return render_template('index.html', todos=todos)
 
 # Route for user registration
@@ -125,7 +127,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 
 # Route for adding a new task
@@ -196,4 +198,4 @@ if __name__ == "__main__":
     with app.app_context():
         # Create database tables
         db.create_all()
-    app.run(debug=True, port=8007)
+    app.run(debug=True, port=5000)
